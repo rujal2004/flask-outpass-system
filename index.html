@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUIT Outpass Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>WELCOME TO JUIT OUT PASS PORTAL</h1>
+        
+        <div class="buttons">
+                <a href="{{ url_for('warden') }}" class="button">
+                    <img src="{{ url_for('static', filename='images/1.png') }}" alt="Warden Icon">
+                    <p>WARDEN</p>
+                </a>
+
+            <div class="button">
+                <a href="{{ url_for('student') }}" class="button">
+                <img src="{{ url_for('static', filename='images/1.png') }}" alt="Student Icon">
+                <p>STUDENT</p>
+                </a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
