@@ -1,0 +1,73 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('https://www.juit.ac.in/galleryimages/b9330a7f13436b4423a4252f561f883e.jpg') no-repeat center center/cover;
+}
+.first{
+    justify-content: center;
+    text-align: center;
+}
+.first h1{
+    color:antiquewhite ;
+}
+.first p{
+    margin: 10px;
+    color: antiquewhite;
+}
+.first h3{
+    color: antiquewhite;
+}
+.otp-container {
+    background: rgba(65, 51, 51, 0.6);
+    color: rgba(13, 58, 30, 0.984);
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.otp-container h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.otp-container p {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.otp-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.otp-container button {
+    background-color: #ff9e29;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+.otp-container button:hover {
+    background-color: #906432;
+    color: aqua;
+}
+

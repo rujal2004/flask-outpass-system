@@ -1,0 +1,45 @@
+{% extends "studenthome.html" %}
+
+{% block title %}Approved Outpasses{% endblock %}
+
+{% block content %}
+<style>
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px; 
+        width: 100%; 
+    }
+    th, td {
+    padding: 10px; 
+    }    
+</style>
+<h1>Approved Outpasses</h1>
+{% if outpasses %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Room No</th>
+                <th>Reason</th>
+                <th>Request Date</th>
+                <th>Approval Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for outpass in outpasses %}
+            <tr>
+                <td>{{ outpass.id }}</td>
+                <td>{{ outpass.name }}</td>
+                <td>{{ outpass.roomno }}</td>
+                <td>{{ outpass.reason }}</td>
+                <td>{{ outpass.request_date }}</td>
+                <td>{{ outpass.approval_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No approved outpasses found.</p>
+{% endif %}
+{% endblock %}
