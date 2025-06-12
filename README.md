@@ -1,11 +1,11 @@
 ## Online Outpass Portal
 A Flask-based web application for college students to request outpasses, which are then approved in a multi-step flow: **Student → Parent → Warden**
 ## Features
- Student login and outpass request form
- Parent approval with screenshot upload via the portal
- Warden dashboard for approving or rejecting outpass requests, with each request routed to the respective warden based on the student's hostel
- SQLite database integration for tracking requests
- Role-based access system(Student, Warden)
+ Student login and outpass request form from the Student Portal.
+ Parent approval with screenshot upload via the portal.
+ Warden dashboard for approving or rejecting outpass requests, with each request routed to the respective warden based on the student's hostel.
+ SQLite database integration for tracking requests.
+ Role-based access system(Student, Warden).
 ## Tech Used
  Backend: Python (Flask)
  Frontend: HTML, CSS, Java Script
