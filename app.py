@@ -7,7 +7,7 @@ import bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///outpass.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:rujal@localhost/outpass_db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
