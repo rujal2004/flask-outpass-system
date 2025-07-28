@@ -2,10 +2,49 @@ import os
 from werkzeug.utils import secure_filename
 from flask import Flask,session,render_template,request,redirect,url_for,session
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from datetime import datetime 
 import bcrypt
 
 app = Flask(__name__)
+
+# For mail configuration 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'rujalgupta656@gmail.com'
+app.config['MAIL_PASSWORD'] = 'dihj czjn lmjb zyia'
+app.config['MAIL_DEFAULT_SENDER'] =  'rujalgupta656@gmail.com'
+
+mail = Mail(app)
+
+def notify_parent(student,from_date,reason):
+    try:
+        msg = Message(
+            subject="Outpass Request Notification",
+            recipients=[student.parent_email]  
+        )
+        msg.body = f"""Dear Parent,
+
+Your child, {student.name}, has submitted an outpass request with the following details:
+
+- Hostel: {student.hostel}
+- Room No.: {student.outpasses[-1].roomno if student.outpasses else 'N/A'}
+- Reason: {reason}
+- Date: {from_date.strftime('%d %b %Y')}
+
+You can log into the parent portal or contact the warden for more info.
+
+Regards,
+Outpass Management System
+"""
+        mail.send(msg)
+        print("Parent notification email sent.")
+    except Exception as e:
+        print("Failed to send email:", e)
+
+
+
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:rujal@localhost/outpass_db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -19,21 +58,25 @@ class User(db.Model):
       password = db.Column(db.String(100),nullable = False)
       name = db.Column(db.String(500),nullable=False)
       email = db.Column(db.String(200),unique = True ,nullable = False)
+      parent_email = db.Column(db.String(200),nullable = False)
       hostel = db.Column(db.String(50),nullable = False)
+      
 
 
 
-      def __init__(self,email,password,name,enrollment,hostel) :
+
+      def __init__(self,email,parent_email,password,name,enrollment,hostel) :
           self.enrollment=enrollment
           self.name = name
           self.email = email
+          self.parent_email = parent_email
           self.hostel = hostel
-          self.password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt())
+          self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
 
 
       def check_password(self,password):
-          return bcrypt.checkpw(password.encode('utf-8'),self.password)
-
+           return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
 
 
 class Warden(db.Model):
@@ -117,6 +160,10 @@ def fill():
 
             db.session.add(new_outpass)
             db.session.commit()
+            
+            student = User.query.filter_by(enrollment=student_id).first()
+            if student:
+                notify_parent(student, request_date, reason)
             return redirect('/studenthome')
     return render_template('outpass.html')
 
@@ -167,13 +214,15 @@ def register():
 
      enrollment = request.form.get('enrollment')
      email = request.form.get('email')
+     parent_email = request.form.get('parent_email')
+
      password = request.form.get('password')
      hostel = request.form.get('hostel')
     
 
      print(f"Name: {name}, enrollment: {enrollment}, Email: {email}, Password: {password}")
 
-     new_user = User(name=name,email=email,password=password,enrollment=enrollment,hostel=hostel)
+     new_user = User(name=name,email=email,parent_email=parent_email,password=password,enrollment=enrollment,hostel=hostel)
      db.session.add(new_user)
      db.session.commit()
      return redirect('/student')
@@ -265,7 +314,7 @@ def reset_password():
         if new_password == confirm_password:
             user = User.query.filter_by(enrollment=enrollment_number, email=email).first()
             if user:
-                user.password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+                user.password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
                 db.session.commit()
                 return "Password successfully changed!"
             else:
