@@ -9,7 +9,7 @@ A Flask-based web application for college students to request outpasses, which a
  
  Warden dashboard for approving or rejecting outpass requests, with each request routed to the respective warden based on the student's hostel.
  
- SQLite database integration for tracking requests.
+ MySQL database integration for tracking requests
  
  Role-based access system(Student, Warden).
 ## Tech Used
@@ -17,7 +17,7 @@ A Flask-based web application for college students to request outpasses, which a
  
  **Frontend:** HTML, CSS, Java Script
  
- **Database:** SQLite
+ **Database:**  MySQL
  
  **Hosting:** Render&Local 
 ## Preview:
