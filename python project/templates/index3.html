@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='index3.css') }}">
+</head>
+<body>
+    <div class="first">
+    <h1>Welcome Again!</h1>
+    <p>Please login using webkiosk credentials</p>
+     <h3>Email verification</h3>
+    <div class="otp-container">
+        <p>Please check your email and enter the OTP</p>
+        <form id="otpForm">
+            <label for="otpInput">Enter the OTP</label>
+            <input type="text" id="otpInput" name="otp" required placeholder="Enter OTP">
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+    </div>
+    <script src="{{ url_for('static', filename='index3.js') }}"></script>
+</body>
+</html>

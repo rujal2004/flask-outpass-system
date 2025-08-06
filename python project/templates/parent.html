@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parent Approval</title>
+</head>
+<body>
+    <h1>Parent Approval Page</h1>
+    {% for request in requests %}
+        <div>
+            <p>Outpass ID: {{ request.outpass_id }}</p>
+            <p>Student ID: {{ request.student_id }}</p>
+            <p>Reason: {{ request.reason }}</p>
+            <form action="/approve_parent/{{ request.outpass_id }}" method="post">
+                <button type="submit">Approve</button>
+            </form>
+        </div>
+    {% endfor %}
+</body>
+</html>

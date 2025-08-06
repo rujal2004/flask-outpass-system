@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Outpass Requests</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_outpasses.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo">Outpass System</div>
+        <div class="nav-links">
+            <a href="{{ url_for('warden') }}">Home</a>
+            <button onclick="logOut()">Log Out</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Pending Outpass Requests</h1>
+    
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Student ID</th>
+                <th>Room No</th>
+                <th>Reason</th>
+                <th>Action</th>
+            </tr>
+            {% for outpass in outpasses %}
+            <tr>
+                <td>{{ outpass.name }}</td>
+                <td>{{ outpass.student_id }}</td>
+                <td>{{ outpass.roomno }}</td>
+                <td>{{ outpass.reason }}</td>
+                <td>
+                   
+                    <form action="{{ url_for('update_outpass', outpass_id=outpass.id, action='approve') }}" method="POST">
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form action="{{ url_for('update_outpass', outpass_id=outpass.id, action='reject') }}" method="POST">
+                        <button type="submit">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script>
+        function logOut() {
+            window.location.href = "{{ url_for('logout') }}";
+        }
+    </script>
+</body>
+</html>
